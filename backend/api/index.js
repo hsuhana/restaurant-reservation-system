@@ -9,7 +9,6 @@ var passport = require("passport");
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require("mongoose");
-var MongoStore = require('connect-mongo');
 var http = require("http");
 var debug = require("debug")("backend:server");
 
@@ -41,9 +40,6 @@ app.use(session({
   secret: "secretSession",
   resave: true,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: MONGODB_URI, // MongoDB connection string
-  }),
   cookie: {
     secure: true,
     sameSite: false,
