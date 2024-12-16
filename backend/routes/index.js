@@ -57,11 +57,11 @@ router.post("/login", (req, res, next) => {
       return res.status(200).json({ 
         success: true,
         message: "Login successful!",
-        user: {
-          username: user.username,
-          firstName: user.firstName,
-          lastName: user.lastName,
-        },
+        // user: {
+        //   username: user.username,
+        //   firstName: user.firstName,
+        //   lastName: user.lastName,
+        // },
       });
     });
   })(req, res, next);
