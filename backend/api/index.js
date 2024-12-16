@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
   secret: "secretSession",
-  resave: false,
+  resave: true,
   saveUninitialized: false,
   cookie: {
     secure: true,
@@ -50,18 +50,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(Member.createStrategy());
 passport.serializeUser(Member.serializeUser());
-passport.deserializeUser(Member.deserializeUser(
-  (id, done) => {
-    console.log("Deserializing user with ID:", id);
-    Member.findById(id, (err, user) => {
-      if (err) {
-        return done(err);
-      }
-      console.log("User found:", user);
-      done(null, user);
-    });
-  }
-));
+passport.deserializeUser(Member.deserializeUser());
 
 //app.get("/", (req, res) => res.send("Express on Vercel"));
 
