@@ -5,7 +5,7 @@ const useAuth = () => {
 
     const apiUrl = process.env.REACT_APP_API_URL || '';
 
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState();
     const [isLoading, setIsLoading] = useState(true); // New loading state
 
     useEffect(() => {
