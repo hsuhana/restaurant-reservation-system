@@ -51,8 +51,22 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(Member.createStrategy());
-passport.serializeUser(Member.serializeUser());
-passport.deserializeUser(Member.deserializeUser());
+//passport.serializeUser(Member.serializeUser());
+//passport.deserializeUser(Member.deserializeUser());
+// Custom serialization: Save only the user ID to the session
+passport.serializeUser((user, done) => {
+  done(null, user._id); // Save the user's ID to the session
+});
+
+// Custom deserialization: Use the ID from the session to fetch the full user object
+passport.deserializeUser((id, done) => {
+  Member.findById(id, (err, user) => {
+    if (err) {
+      return done(err);
+    }
+    done(null, user); // Attach the user object to req.user
+  });
+});
 
 //app.get("/", (req, res) => res.send("Express on Vercel"));
 
