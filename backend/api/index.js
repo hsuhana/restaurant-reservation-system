@@ -25,10 +25,12 @@ var app = express();
 
 // CORS setup
 var cors = require('cors');
-app.use(cors());
+app.use(cors({
+  origin: 'https://restaurant-reservation-system-3px4.vercel.app',  // Replace with your frontend domain
+}));
 
 // Set up middleware
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
