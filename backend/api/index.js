@@ -23,6 +23,10 @@ var Member = require('../models/member');
 // Initialize app
 var app = express();
 
+// CORS setup
+var cors = require('cors');
+app.use(cors());
+
 // Set up middleware
 app.use(logger('dev'));
 app.use(express.json());
@@ -52,10 +56,6 @@ app.use('/', indexRouter);
 app.use('/members', membersRouter);
 app.use('/reservations', reservationRouter);
 app.use('/auth', authRouter);
-
-// CORS setup
-var cors = require('cors');
-app.use(cors());
 
 // Connect to MongoDB
 mongoose.connect(configs.ConnectionStrings.MongoDB)
