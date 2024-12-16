@@ -42,7 +42,7 @@ app.use(session({
   resave: true,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: CONNECTION_STRING_MONGODB, // MongoDB connection string
+    mongoUrl: MONGODB_URI, // MongoDB connection string
   }),
   cookie: {
     secure: true,
