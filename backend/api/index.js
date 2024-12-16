@@ -9,6 +9,7 @@ var passport = require("passport");
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require("mongoose");
+var MongoStore = require('connect-mongo');
 var http = require("http");
 var debug = require("debug")("backend:server");
 
@@ -40,6 +41,9 @@ app.use(session({
   secret: "secretSession",
   resave: true,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: CONNECTION_STRING_MONGODB, // MongoDB connection string
+  }),
   cookie: {
     secure: true,
     sameSite: false,
@@ -51,22 +55,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(Member.createStrategy());
-//passport.serializeUser(Member.serializeUser());
-//passport.deserializeUser(Member.deserializeUser());
-// Custom serialization: Save only the user ID to the session
-passport.serializeUser((user, done) => {
-  done(null, user._id); // Save the user's ID to the session
-});
-
-// Custom deserialization: Use the ID from the session to fetch the full user object
-passport.deserializeUser((id, done) => {
-  Member.findById(id, (err, user) => {
-    if (err) {
-      return done(err);
-    }
-    done(null, user); // Attach the user object to req.user
-  });
-});
+passport.serializeUser(Member.serializeUser());
+passport.deserializeUser(Member.deserializeUser());
 
 //app.get("/", (req, res) => res.send("Express on Vercel"));
 
