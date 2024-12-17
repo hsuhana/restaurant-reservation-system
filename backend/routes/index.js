@@ -65,7 +65,7 @@ router.post("/login", (req, res, next) => {
         },
       });
     });
-    res.cookie("user", req.user);
+    
   })(req, res, next);
 });
 
