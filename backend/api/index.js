@@ -5,8 +5,8 @@ var express = require('express');
 var path = require('path');
 var session = require("express-session");
 var passport = require("passport");
-var RedisStore = require('connect-redis').default;
-var { createClient } = require('redis');
+//var RedisStore = require('connect-redis').default;
+//var { createClient } = require('redis');
 
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
