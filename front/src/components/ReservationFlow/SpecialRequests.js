@@ -27,7 +27,7 @@ const SpecialRequests = ({ date, timeSlot, table, guests, onPrevious }) => {
 
     const handleReserve = async () => {
         try{
-            const response = await axios.post(`${apiUrl}/reservations/reserve`, {
+            const response = await axios.post(`${apiUrl}/reservations/reserve`, { withCredentials: true }, {
                 date,
                 timeSlot,
                 guests,
