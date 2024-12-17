@@ -39,7 +39,7 @@ const Member = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            const response = await axios.patch("/members/profile", formData, { withCredentials: true, });
+            const response = await axios.patch(`${apiUrl}/members/profile`, formData, { withCredentials: true, });
             setMemberData(response.data.member); // Update the displayed data
             setEditMode(false); // Exit edit mode
         }catch(err){
@@ -49,7 +49,7 @@ const Member = () => {
 
     const handleCancelReservation = async (reservationId) => {
         try{
-            await axios.delete(`/reservations/${reservationId}`, { withCredentials: true });
+            await axios.delete(`${apiUrl}/reservations/${reservationId}`, { withCredentials: true });
             setReservations((prev) => prev.filter((res) => res._id !== reservationId));
         }catch (err){
             setError(err.response?.data?.message || "Error canceling reservation.");
