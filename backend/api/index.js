@@ -26,6 +26,8 @@ var Member = require('../models/member');
 // Initialize app
 var app = express();
 
+app.set('trust proxy', 1);
+
 // CORS setup
 var cors = require('cors');
 app.use(cors({
@@ -33,8 +35,8 @@ app.use(cors({
   credentials: true,
 }));
 
-const redisClient = createClient();
-redisClient.connect();
+//const redisClient = createClient();
+//redisClient.connect();
 
 // Set up middleware
 //app.use(logger('dev'));
@@ -42,7 +44,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-  store: new RedisStore({ client: redisClient }),
+  //store: new RedisStore({ client: redisClient }),
   secret: "secretSession",
   resave: true,
   saveUninitialized: false,
