@@ -14,7 +14,12 @@ const Member = () => {
     useEffect(() => {
         const fetchMemberData = async () => {
             try {
-                const response = await axios.get(`${apiUrl}/members/profile`, credentials, {
+
+                if (!req.isAuthenticated()) {
+                    return res.status(401).json({ message: 'Not authenticated' });
+                }
+
+                const response = await axios.get(`${apiUrl}/members/profile`, {
                     withCredentials: true,
                 });
                 setMemberData(response.data.member);
