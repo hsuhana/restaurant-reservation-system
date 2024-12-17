@@ -27,13 +27,13 @@ const SpecialRequests = ({ date, timeSlot, table, guests, onPrevious }) => {
 
     const handleReserve = async () => {
         try{
-            const response = await axios.post(`${apiUrl}/reservations/reserve`, async (req, res), {
+            const response = await axios.post(`${apiUrl}/reservations/reserve`, {
                 date,
                 timeSlot,
                 guests,
                 tableId: table,
                 specialRequests,
-            });
+            }, { withCredentials: true });
 
             // Store reservation information and display success message
             setReservationInfo({
