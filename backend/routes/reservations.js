@@ -70,7 +70,8 @@ router.get('/tables/:id', async (req, res) => {
 });
 
 // POST /reserve
-router.post('/reserve', isAuthenticated, async (req, res) => {
+//router.post('/reserve', isAuthenticated, async (req, res) => {
+router.post('/reserve', async (req, res) => {
     try {
         const { date, timeSlot, tableId, guests, specialRequests } = req.body;
 
