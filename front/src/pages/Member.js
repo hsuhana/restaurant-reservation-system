@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Member = () => {
+
+    const apiUrl = process.env.REACT_APP_API_URL || '';
+
     const [memberData, setMemberData] = useState(null);
     const [reservations, setReservations] = useState([]);
     const [error, setError] = useState("");
@@ -11,7 +14,7 @@ const Member = () => {
     useEffect(() => {
         const fetchMemberData = async () => {
             try {
-                const response = await axios.get("/members/profile", {
+                const response = await axios.get(`${apiUrl}/members/profile`, {
                     withCredentials: true,
                 });
                 setMemberData(response.data.member);
