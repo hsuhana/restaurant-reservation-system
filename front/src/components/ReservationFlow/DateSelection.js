@@ -3,11 +3,14 @@ import axios from 'axios';
 
 
 const DateSelection = ({ onNext }) => {
+
+    const apiUrl = process.env.REACT_APP_API_URL || '';
+
     const [availableDates, setAvailableDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState('');
 
     useEffect(() => {
-        axios.get('/reservations/available-dates')
+        axios.get(`${apiUrl}/reservations/available-dates`)
         .then(response => {
             console.log('Available Dates:', response.data);
             setAvailableDates(response.data);})
