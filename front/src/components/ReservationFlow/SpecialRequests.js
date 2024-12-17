@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SpecialRequests = ({ date, timeSlot, table, guests, onPrevious }) => {
+
+    const apiUrl = process.env.REACT_APP_API_URL || '';
+
     const [specialRequests, setSpecialRequests] = useState('');
     const [reservationInfo, setReservationInfo] = useState(null); // To store reservation details
     const [tableNumber, setTableNumber] = useState(''); // To store table number
@@ -12,7 +15,7 @@ const SpecialRequests = ({ date, timeSlot, table, guests, onPrevious }) => {
     useEffect(() => {
         if (table) {
             axios
-                .get(`/reservations/tables/${table}`) // Assuming an endpoint exists to fetch a table by its ID
+                .get(`${apiUrl}/reservations/tables/${table}`) // Assuming an endpoint exists to fetch a table by its ID
                 .then(response => {
                     console.log('Table Response:', response.data);
                     setTableNumber(response.data.tableNumber)
