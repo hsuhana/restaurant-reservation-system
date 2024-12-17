@@ -5,6 +5,8 @@ var express = require('express');
 var path = require('path');
 var session = require("express-session");
 var passport = require("passport");
+var RedisStore = require('connect-redis').default;
+var { createClient } = require('redis');
 
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -31,12 +33,16 @@ app.use(cors({
   credentials: true,
 }));
 
+const redisClient = createClient();
+redisClient.connect();
+
 // Set up middleware
 //app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
+  store: new RedisStore({ client: redisClient }),
   secret: "secretSession",
   resave: true,
   saveUninitialized: false,
