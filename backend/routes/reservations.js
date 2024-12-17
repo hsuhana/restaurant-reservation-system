@@ -7,6 +7,9 @@ const TimeSlot = require('../models/timeSlot');
 var passport = require('passport');
 const { isAuthenticated } = require('../utils/auth');
 
+const mongoose = require('mongoose'); // Ensure mongoose is imported
+
+
 // GET /available-dates
 // Route to fetch available dates (those with available time slots and tables)
 router.get('/available-dates', async (req, res) => {
@@ -103,11 +106,25 @@ router.post('/reserve', isAuthenticated, async (req, res) => {
 });
 
 // DELETE /:id
-router.delete('/:id', isAuthenticated, async(req, res) => {
-    try{
+router.delete('/:id', isAuthenticated, async (req, res) => {
+    try {
         const reservationId = req.params.id;
 
-        const reservation = await Reservation.findOne({
+        // Validate ObjectId
+        if (!mongoose.Types.ObjectId.isValid(reservationId)) {
+            return res.status(400).json({ error: "Invalid reservation ID." });
+        }
+
+        // Ensure user is authenticated
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ error: "User not authenticated." });
+        }
+
+        console.log("User ID:", req.user._id);
+        console.log("Reservation ID:", reservationId);
+
+        // Find and delete the reservation
+        const reservation = await Reservation.findOneAndDelete({
             _id: reservationId,
             member: req.user._id,
         });
@@ -116,13 +133,13 @@ router.delete('/:id', isAuthenticated, async(req, res) => {
             return res.status(404).json({ error: "Reservation not found or not authorized to cancel." });
         }
 
-        await Reservation.deleteOne({ _id: reservationId });
         res.status(200).json({ message: "Reservation canceled successfully." });
-    } catch (error){
+    } catch (error) {
         console.error("Error canceling reservation:", error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: "Internal server error." });
     }
 });
+
 
 
 module.exports = router;
