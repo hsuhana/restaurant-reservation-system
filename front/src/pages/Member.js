@@ -14,7 +14,7 @@ const Member = () => {
     useEffect(() => {
         const fetchMemberData = async () => {
             try {
-                const response = await axios.get(`${apiUrl}/members/profile`, {
+                const response = await axios.get(`${apiUrl}/members/profile`, credentials, {
                     withCredentials: true,
                 });
                 setMemberData(response.data.member);
