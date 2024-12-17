@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const TableSelection = ({ date, timeSlot, onNext, onPrevious }) => {
+
+    const apiUrl = process.env.REACT_APP_API_URL || '';
+
     const [guests, setGuests] = useState(0); // State for the number of guests
     const [tables, setTables] = useState([]);
     const [selectedTable, setSelectedTable] = useState('');
@@ -10,7 +13,7 @@ const TableSelection = ({ date, timeSlot, onNext, onPrevious }) => {
     useEffect(() => {
         if (guests > 0) {
             axios
-                .get(`/reservations/available-tables?date=${date}&timeSlot=${timeSlot}&guests=${guests}`)
+                .get(`${apiUrl}/reservations/available-tables?date=${date}&timeSlot=${timeSlot}&guests=${guests}`)
                 .then(response => setTables(response.data))
                 .catch(error => console.log(error));
         }

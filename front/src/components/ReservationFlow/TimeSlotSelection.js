@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const TimeSlotSelection = ({ date, onNext, onPrevious }) => {
+
+    const apiUrl = process.env.REACT_APP_API_URL || '';
+
     const [timeSlots, setTimeSlots] = useState([]);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
 
     useEffect(() => {
-        axios.get(`/reservations/available-time-slots?date=${date}`)
+        axios.get(`${apiUrl}/reservations/available-time-slots?date=${date}`)
         .then(response => setTimeSlots(response.data))
         .catch(error => console.log(error));
     }, [date]);
