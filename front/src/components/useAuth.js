@@ -11,7 +11,7 @@ const useAuth = () => {
     useEffect(() => {
         const checkAuth = async () => {
             try{
-                const response = await axios.get(`${apiUrl}/auth/check`, {credentials: 'include'}, { withCredentials: true });
+                const response = await axios.get(`${apiUrl}/auth/check`, { withCredentials: true });
                 setIsAuthenticated(response.data.isAuthenticated);
             }catch(error){
                 setIsAuthenticated(false);
